@@ -1,0 +1,36 @@
+{
+  "name": "mtv-for-palestine",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "test:schiff": "tsc app/utils/fillOutForms.ts",
+    "test:schiff:watch": "tsc app/utils/fillOutForms.ts --watch",
+    "compile:selectors": "tsc app/utils/selectors.ts",
+    "test:schiff:debug": "node --inspect-brk app/utils/fillOutForms.js",
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@react-google-maps/api": "^2.20.7",
+    "next": "15.3.3",
+    "openai": "^5.2.0",
+    "puppeteer": "^24.10.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "15.3.3",
+    "tailwindcss": "^4",
+    "tsx": "^4.20.3",
+    "typescript": "^5.8.3"
+  },
+  "type": "module"
+}
