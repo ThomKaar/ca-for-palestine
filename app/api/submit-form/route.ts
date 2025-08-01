@@ -1,26 +1,6 @@
 import { NextResponse } from 'next/server';
-import puppeteer from 'puppeteer';
 import { contactSchiff } from '../../utils/fillOutForms.ts';
-import {
-  getContactForm,
-  getPrefix,
-  getFirstName,
-  getLastName,
-  getStreetAddressOne,
-  getStreetAddressTwo,
-  getCity,
-  getState,
-  getZipCode,
-  getPhoneNumber,
-  getEmailInput,
-  getEmailConfirmationInput,
-  getSubjectInput,
-  getMessageTopic,
-  getMessage
-} from '../../../lib/selectors';
-
-
-
+import postMango from '../../utils/mango.ts';
 
 export async function POST(request: Request) {
   try {
@@ -39,10 +19,13 @@ export async function POST(request: Request) {
       }, {
         ...userInfo,
     },
-  { dev: false});
+  { dev: true});
     
+    postMango('Schiff');
+
     return NextResponse.json({ 
-      message: 'Suckcess' 
+      message: 'Suck less',
+      status: 200 
     });
   } catch (_erorr) {
     return NextResponse.json(

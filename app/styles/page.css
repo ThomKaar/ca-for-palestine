@@ -1,3 +1,8 @@
 input:invalid:not([value=""]) {
     border: 1px solid red;
 }
+
+html, body, main {
+    margin: 0;
+    height: 100%
+}
