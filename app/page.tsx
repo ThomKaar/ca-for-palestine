@@ -1,7 +1,7 @@
 'use client';
 
 import './styles/page.css';
-import { useState } from 'react';
+import { useState, Suspense } from 'react';
 import type { Representative, EmailContent, UserInfo } from './types/main.ts';
 import { inlcudeName } from '@/utils/commonUtils'
 import { useSearchParams } from 'next/navigation';
@@ -21,6 +21,15 @@ const REPRESENTATIVES: Representative[] = [
 const inputClasses = 'w-full px-3 py-2 border rounded-md';
 const labelClasses = 'block text-sm font-medium mb-1';
 
+function DecorateEnv() {
+  const searchParams = useSearchParams();
+  const paramValue = searchParams.get('env');
+  if (paramValue === PRODUCTION && env === 'development') {
+    env = PRODUCTION;
+  }
+  return '';
+}
+
 export default function Home() {
   const [, setEmailGenerated] = useState(false);
   const [isGenerating, setIsGenerating] = useState<string | null>(null);
@@ -39,12 +48,6 @@ export default function Home() {
   });
   const [missingInfo, setMissingInfo] = useState(false);
   const [emailSent, setEmailSent] = useState(false);
-  
-  const searchParams = useSearchParams();
-  const paramValue = searchParams.get('env');
-  if (paramValue === PRODUCTION) {
-    env = PRODUCTION;
-  }
 
 
   const launchEmail = async ({ emailContent, userInfo }: { emailContent: EmailContent, userInfo: UserInfo }) => {
@@ -106,6 +109,9 @@ export default function Home() {
 
   return (
      <main>
+      <Suspense>
+        <DecorateEnv />
+      </Suspense>
       {!emailContent && (
         <div className="flex flex-col items-center justify-center p-8 bg-gray-50 relative h-full" >
           <div className="max-w-3xl w-full text-center space-y-8">
