@@ -1,0 +1,12 @@
+## TODO Wishlist
+- Allow emails to other CA reps
+  - Senator Alex Padilla
+  - District Rep Sam Liccardo
+- Automate emails every day -- option to pay for 100 days of emails? offering at cost, likely 0.01 per email
+- confirmation email to sender
+- info and resources about what is happening to the Palestinian people
+- option to not use gen AI for the default email text, instead use prewritten email as template
+- include more current info in the email template
+- contact links
+- git actions for unit tests and how to contribute
+- use twilio phone number instead of mine
