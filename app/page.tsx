@@ -157,8 +157,8 @@ export default function Home() {
         </div>
       )} 
       {emailContent && (
-          <div className="text-left text-gray-700 w-full my-4 px-6 flex justify-center">
-            <div className="pg-white-100 flex flex-col gap-4 p-6 overflow-auto rounded-lg shadow-md z-3 opacity-100 bg-white w-3/5">
+          <div className="text-left text-gray-700 w-full my-4 px-6:lg flex justify-center">
+            <div className="pg-white-100 flex flex-col gap-4 p-6 overflow-auto rounded-lg shadow-md z-3 opacity-100 bg-white lg:w-3/5 w-4/5">
               <h3 className="text-center text-lg" >Nice! We&apos;ve generated an email for you, feel free to edit though and sign your name at the end.</h3>
               <div>
                 <label htmlFor="subject" className="block text-sm font-medium">
