@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Email Campaign for Palestine',
-  description: 'Generate an email to Sam Liccardo to take action on the humanitarian crisis in Palestine',
+  title: 'CA to Free Palestine',
+  description: 'Send an email to Adam Schiff to take action on the humanitarian crisis in Palestine',
 }
 
 export default function RootLayout({
@@ -24,6 +24,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" href="/ca.svg" sizes="any" />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

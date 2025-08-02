@@ -1,14 +1,17 @@
 import { NextResponse } from 'next/server';
-import { contactSchiff } from '../../utils/fillOutForms';
-import postMango from '../../utils/mango';
+import { contactSchiff } from '@/utils/fillOutForms';
+import postMango from '@/utils/mango';
+import { normalizePhoneNumber } from '@/utils/beCommonUtils';
 
 export async function POST(request: Request) {
   try {
     const { 
       subject, 
       body, 
-      userInfo,
+      userInfo = '',
     } = await request.json();
+
+    userInfo.phoneNumber = normalizePhoneNumber(userInfo.phoneNumber)
    
     contactSchiff(
       {

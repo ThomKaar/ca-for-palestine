@@ -12,10 +12,13 @@ export async function POST(request: Request) {
     const prompt = `Write a professional and compelling email to ${representative} about stopping the genocide in Palestine. The email should:
 1. Be respectful but urgent in tone
 2. Include specific calls to action
-3. Reference the humanitarian crisis
+3. Reference how we need to help the starving families in Gaza
 4. Request concrete steps to help stop the violence
-5. Be around 200 words
-6. Include a clear subject line`;
+5. Hold Netanyahu accountable
+6. Hold ${representative} accountable for allowing this to happen after taking $6million from pro-israel lobbies. 
+7. Be around 200 words
+8. Include a clear subject line
+9. Finish the email with Sincerely, [Your Name]`;
 
     const completion = await openai.chat.completions.create({
       messages: [{ role: "user", content: prompt }],

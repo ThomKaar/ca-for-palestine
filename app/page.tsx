@@ -1,9 +1,13 @@
 'use client';
 
 import './styles/page.css';
-import { useState } from 'react';
+import { useState, Suspense } from 'react';
 import type { Representative, EmailContent, UserInfo } from './types/main.ts';
-const env = process.env.NODE_ENV || 'development';
+import { inlcudeName } from '@/utils/commonUtils'
+import { useSearchParams } from 'next/navigation';
+
+let env = process.env.NODE_ENV || 'development';
+const PRODUCTION = 'production';
 
 const REPRESENTATIVES: Representative[] = [
   {
@@ -16,6 +20,15 @@ const REPRESENTATIVES: Representative[] = [
 
 const inputClasses = 'w-full px-3 py-2 border rounded-md';
 const labelClasses = 'block text-sm font-medium mb-1';
+
+function DecorateEnv() {
+  const searchParams = useSearchParams();
+  const paramValue = searchParams.get('env');
+  if (paramValue === PRODUCTION && env === 'development') {
+    env = PRODUCTION;
+  }
+  return '';
+}
 
 export default function Home() {
   const [, setEmailGenerated] = useState(false);
@@ -36,17 +49,18 @@ export default function Home() {
   const [missingInfo, setMissingInfo] = useState(false);
   const [emailSent, setEmailSent] = useState(false);
 
+
   const launchEmail = async ({ emailContent, userInfo }: { emailContent: EmailContent, userInfo: UserInfo }) => {
     const { subject, body } = emailContent;
-    console.log({ info: isMissingUserInfo(userInfo)});
     if (isMissingUserInfo(userInfo)) {
       setMissingInfo(true);
       return;
     }
 
+    const bodyWithName = inlcudeName(body, userInfo.firstName, userInfo.lastName);
     const response = await fetch('/api/submit-form', {
       method: 'POST',
-      body: JSON.stringify({ subject, body, userInfo }),
+      body: JSON.stringify({ subject, body: bodyWithName, userInfo }),
     });
     if (response.ok) {
       setEmailContent(null);
@@ -95,12 +109,15 @@ export default function Home() {
 
   return (
      <main>
+      <Suspense>
+        <DecorateEnv />
+      </Suspense>
       {!emailContent && (
         <div className="flex flex-col items-center justify-center p-8 bg-gray-50 relative h-full" >
           <div className="max-w-3xl w-full text-center space-y-8">
           <div>
             <h1 className="text-4xl font-bold text-gray-700 mb-4">
-              Contact our CA Representatives to stop the genocide of Palestinian people.
+              Contact our California Representatives to stop the genocide of Palestinian people.
             </h1>
         
             <p className="text-lg text-gray-700 mb-8">
@@ -126,9 +143,7 @@ export default function Home() {
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                   </svg>
                 ) : (
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                  </svg>
+                  ''
                 )}
               </button>
             </div>
@@ -144,7 +159,7 @@ export default function Home() {
       {emailContent && (
           <div className="text-left text-gray-700 w-full my-4 px-6 flex justify-center">
             <div className="pg-white-100 flex flex-col gap-4 p-6 overflow-auto rounded-lg shadow-md z-3 opacity-100 bg-white w-3/5">
-              <h3 className="text-center text-lg" >Nice! We&apos;ve generated an email for you, feel free to edit though.</h3>
+              <h3 className="text-center text-lg" >Nice! We&apos;ve generated an email for you, feel free to edit though and sign your name at the end.</h3>
               <div>
                 <label htmlFor="subject" className="block text-sm font-medium">
                   Subject
