@@ -1,26 +1,29 @@
 {
   "compilerOptions": {
-    "target": "ES2020", // Or later
-    "module": "nodenext", // Required for ESM
-    "moduleResolution": "NodeNext", // Enables proper ESM resolution
-    "outDir": "./dist", // Output directory
-    "rootDir": "./app", // Your source code
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "allowImportingTsExtensions": true,
-    "strict": true,
-    "skipLibCheck": true,
-    "resolveJsonModule": true,
+    "target": "es5",
     "lib": [
       "dom",
       "dom.iterable",
       "esnext"
     ],
     "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
     "noEmit": true,
-    "incremental": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
+    "incremental": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "./app/*"
+      ]
+    },
     "plugins": [
       {
         "name": "next"
@@ -28,7 +31,9 @@
     ]
   },
   "include": [
-    "app",
+    "**/*.ts",
+    "**/*.tsx",
+    "next-env.d.ts",
     ".next/types/**/*.ts"
   ],
   "exclude": [

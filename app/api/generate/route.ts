@@ -22,7 +22,14 @@ export async function POST(request: Request) {
       model: "gpt-3.5-turbo",
     });
 
-    const generatedEmail = completion.choices[0].message.content;
+    const generatedEmail = completion.choices[0].message.content || '';
+
+    if (!generatedEmail) {
+      return NextResponse.json(
+        { error: 'No email content generated' },
+        { status: 500 }
+      );
+    }
     
     // Split into subject and body
     const [subject, ...bodyParts] = generatedEmail.split('\n');

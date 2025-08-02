@@ -15,7 +15,7 @@ import {
   getMessageTopic,
   getMessage,
   submitForm,
- } from './selectors.ts';
+ } from './selectors';
 import puppeteer from 'puppeteer';
 
 

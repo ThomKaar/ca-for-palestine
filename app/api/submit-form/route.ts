@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
-import { contactSchiff } from '../../utils/fillOutForms.ts';
-import postMango from '../../utils/mango.ts';
+import { contactSchiff } from '../../utils/fillOutForms';
+import postMango from '../../utils/mango';
 
 export async function POST(request: Request) {
   try {
@@ -14,12 +14,12 @@ export async function POST(request: Request) {
       {
         subject,
         body,
-        representative: 'Schiff',
+        representative: 'Senator Adam Schiff',
 
       }, {
         ...userInfo,
     },
-  { dev: true});
+  { dev: false });
     
     postMango('Schiff');
 
@@ -27,9 +27,9 @@ export async function POST(request: Request) {
       message: 'Suck less',
       status: 200 
     });
-  } catch (_erorr) {
+  } catch (err) {
     return NextResponse.json(
-      { error: 'Failed to process request or open browser' },
+      { error: 'Failed to process request or open browser: ' + err },
       { status: 500 }
     );
   }

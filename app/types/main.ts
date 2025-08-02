@@ -1,5 +1,6 @@
+type RepName = 'Senator Adam Schiff' | 'Liccardo' | 'Padilla';
 export interface Representative {
-    name: string;
+    name: RepName;
     email: string;
     buttonColor: string;
     hoverColor: string;
@@ -8,7 +9,7 @@ export interface Representative {
 export interface EmailContent {
     subject: string;
     body: string;
-    representative: 'Schiff' | 'Liccardo' | 'Padilla';
+    representative: RepName;
 }
 
 export interface UserInfo {

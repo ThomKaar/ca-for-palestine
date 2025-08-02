@@ -144,7 +144,7 @@ export default function Home() {
       {emailContent && (
           <div className="text-left text-gray-700 w-full my-4 px-6 flex justify-center">
             <div className="pg-white-100 flex flex-col gap-4 p-6 overflow-auto rounded-lg shadow-md z-3 opacity-100 bg-white w-3/5">
-              <h3 className="text-center text-lg" >Nice! We've generated an email for you, feel free to edit though.</h3>
+              <h3 className="text-center text-lg" >Nice! We&apos;ve generated an email for you, feel free to edit though.</h3>
               <div>
                 <label htmlFor="subject" className="block text-sm font-medium">
                   Subject
@@ -170,9 +170,9 @@ export default function Home() {
                 />
               </div>
               <h3 className="text-center text-lg">
-                Last step. We also have to prove to representatives that you're actually one of their constituents, so you'll have to fill out some info below.
+                Last step. We also have to prove to representatives that you&apos;re actually one of their constituents, so you&apos;ll have to fill out some info below.
                 <br/>
-                We don't store any of your personal information, but we do count how many times we successfully email reps.
+                We don&apos;t store any of your personal information, but we do count how many times we successfully email reps.
               </h3>
               <div className="flex flex-row gap-5">
                   <div className="inline-block flex-1">

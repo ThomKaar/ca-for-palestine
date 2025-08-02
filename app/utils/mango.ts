@@ -3,7 +3,7 @@ const uri = `mongodb+srv://${process.env.MONGODB_USERNAME}:${process.env.MONGODB
 
 const dbName = 'ca-for-palestine-metrics';
 const collectionName = 'emailsSent';
-async function connectAndPost(rep) {
+async function connectAndPost(rep: string) {
     let client;
     try {
         client = new MongoClient(uri, {
