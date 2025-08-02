@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { contactSchiff } from '@/utils/fillOutForms';
 import postMango from '@/utils/mango';
-import { normalizePhoneNumber } from '@/utils/commonUtils';
+import { normalizePhoneNumber } from '@/utils/beCommonUtils';
 
 export async function POST(request: Request) {
   try {
