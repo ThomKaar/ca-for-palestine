@@ -14,17 +14,17 @@ export async function POST(request: Request) {
     userInfo.phoneNumber = normalizePhoneNumber(userInfo.phoneNumber)
    
     contactSchiff(
-      {
-        subject,
-        body,
-        representative: 'Senator Adam Schiff',
+        {
+          subject,
+          body,
+          representative: 'Senator Adam Schiff',
 
-      }, {
-        ...userInfo,
-    },
-  { dev: false });
+        }, {
+          ...userInfo,
+      },
+    { dev: false });
     
-    postMango('Schiff');
+    await postMango('Schiff');
 
     return NextResponse.json({ 
       message: 'Suck less',
