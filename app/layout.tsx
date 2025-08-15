@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { Analytics } from "@vercel/analytics/next"
+import { Analytics } from "@vercel/analytics/next";
+import Nav from './components/Nav';
 import "./globals.css";
 
 const geistSans = Geist({
@@ -18,6 +19,12 @@ export const metadata: Metadata = {
   description: 'Send an email to Adam Schiff to take action on the humanitarian crisis in Palestine',
 }
 
+const links = [
+  { label: 'Home', href: '/' },
+  { label: 'About', href: '/about' },
+  { label: 'Contact', href: '/contact' },
+];
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -31,6 +38,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <Nav  links={links} />
         {children}
         <Analytics />
       </body>
