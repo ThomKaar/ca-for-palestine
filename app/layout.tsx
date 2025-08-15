@@ -19,12 +19,6 @@ export const metadata: Metadata = {
   description: 'Send an email to Adam Schiff to take action on the humanitarian crisis in Palestine',
 }
 
-const links = [
-  { label: 'Home', href: '/' },
-  { label: 'About', href: '/about' },
-  { label: 'Contact', href: '/contact' },
-];
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -38,7 +32,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Nav  links={links} />
+        <Nav />
         {children}
         <Analytics />
       </body>

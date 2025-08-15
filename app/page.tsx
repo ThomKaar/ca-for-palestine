@@ -1,35 +1,23 @@
+'use client';
 import './styles/page.css';
-import { Suspense } from 'react';
+import { useEffect, useState } from 'react';
 import Form from './components/Form';
 
-let env = process.env.NODE_ENV || 'development';
-const PRODUCTION = 'production';
 
-type SearchParams = { [key:string]: string | string[] | undefined };
+const env = process.env.NODE_ENV || 'development';
 
-function DecorateEnv({ searchParams }: SearchParams) {
-  const paramValue = searchParams?.env;
-  if (paramValue === PRODUCTION && env === 'development') {
-    env = PRODUCTION;
-  }
-  return '';
-}
-const baseUrl = process.env.BASE_URL || "http://localhost:3000";
+export default function Home() {
+   const [count, setCount] = useState<number | null>(null);
 
-export default async function Home({
-  searchParams,
-}: {
-  searchParams: Promise<SearchParams>
-}) {
-   const data = await fetch(`${baseUrl}/api/count-emails?rep=Schiff`);
-   const { count } = await data.json();
-   const params: SearchParams = await searchParams;
+   useEffect(() => {
+    fetch('/api/count-emails?rep=Schiff')
+      .then(res => res.json())
+      .then(data => setCount(data.count))
+      .catch(err => console.error(err));
+  }, []);
 
   return (
      <main>
-      <Suspense>
-        <DecorateEnv searchParams={params} />
-      </Suspense>
       <Form env={env} count={count as number}/>
     </main>
   );

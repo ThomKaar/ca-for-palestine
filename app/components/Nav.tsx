@@ -23,7 +23,7 @@ export default function Navbar() {
           </div>
 
           <div className="hidden md:flex space-x-6">
-            {navItems.map((item, i) => {
+            {navItems.map((item) => {
               const isActive = pathname === item.path;
               return (
                 <Link
