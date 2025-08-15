@@ -111,14 +111,14 @@ return (
             <div className="flex flex-col gap-4">
 
                 {!emailSent && REPRESENTATIVES.map((rep) => (
-                <div key={rep.name} className="flex items-center gap-2">
+                <div key={rep.name} className="group flex flex-col items-center gap-2">
                     <button
                         onClick={() => {
                             setSelectedRepresentative(rep);
                             generateEmail(rep);
                         }}
                         disabled={isGenerating !== null}
-                        className={`flex-1 ${rep.buttonColor} ${rep.hoverColor} text-white font-bold py-4 px-8 rounded-lg text-lg transition-colors duration-200 flex items-center justify-center gap-2 ${isGenerating !== null ? 'opacity-50 cursor-not-allowed' : ''}`}
+                        className={`flex-1 ${rep.buttonColor} ${rep.hoverColor} text-white font-bold py-4 px-8 rounded-lg text-lg transition-colors duration-200 flex items-center justify-center gap-2 active:scale-95 active:brightness-90${isGenerating !== null ? ' opacity-50 cursor-not-allowed' : ''}`}
                     >
                         <span>Send an Email to {rep.name}</span>
                         {isGenerating === rep.name ? (
@@ -130,8 +130,8 @@ return (
                             ''
                         )}
                     </button>
-                    <span className="text-gray-500 text-sm">
-                        Together we&apos;ve send {count} emails to {rep.name} so far.
+                    <span className="text-gray-500 text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                        Together we&apos;ve sent {count} emails to {rep.name} so far.
                     </span>
                 </div>
                 ))}
