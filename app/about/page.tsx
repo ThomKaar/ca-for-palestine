@@ -37,14 +37,14 @@ export default function AboutPage() {
                     Hi. I&apos;ve made this website because of all of the deeply saddening things I&apos;ve seen going on in Gaza.
                 </p>
                 <p>
-                    Thiking about all of the folks being unjustly killed as they are forced out of the homes they were born and grew up in, is despressing.
+                    Thiking about all of the folks being unjustly killed as they are forced out of the homes they were born and grew up in, is depressing.
                 </p>
                 <p>
                     I&apos;ve been contacting Senators Schiff and Padilla since April 2025 when Senator Bernie Sanders introduced a bill to block sales of military arms and services to Israel in response to the war crimes occuring.
                     <strong> Both Padilla and Schiff voted to not block the arms sales</strong>, further allowing civilians to die in Gaza <a className="text-blue-600 underline" href="https://www.senate.gov/legislative/LIS/roll_call_votes/vote1191/vote_119_1_00455.htm#state">[source]</a>.
                 </p>
                 <p>
-                    My goal is to advocate for peace, for the Palestinian civilians to have the ability to rebuild their cities, and allow for them to greive.
+                    My goal is to advocate for peace, for the Palestinian civilians to have the ability to rebuild their cities, and allow for them to grieve.
                 </p>
             </section>
 
