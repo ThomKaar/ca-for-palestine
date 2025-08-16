@@ -3,6 +3,5 @@ input:invalid:not([value=""]) {
 }
 
 html, body, main {
-    margin: 0;
     height: 100%
 }

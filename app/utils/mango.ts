@@ -27,4 +27,26 @@ async function connectAndPost(rep: string) {
     
 }
  
-export default connectAndPost;
+async function connectAndCountReps(rep: string) {
+    let client;
+    try {
+         client = new MongoClient(uri, {
+            serverApi: {
+                version: ServerApiVersion.v1,
+                strict: true,
+                deprecationErrors: true,
+            }
+        });
+
+        await client.connect();
+        const database = await client.db(dbName);
+        const collection = database.collection(collectionName);
+        return await collection.countDocuments({ rep: rep });
+     } catch (err) {
+        console.log(err);
+        return -1;
+    } finally {
+        await client?.close?.();
+    }
+}
+export { connectAndPost, connectAndCountReps };
