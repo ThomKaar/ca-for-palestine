@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { contactSchiff } from '@/utils/fillOutForms';
+import { contactSchiff, contactPadilla } from '@/utils/fillOutForms';
 import { connectAndPost as postMango } from '@/utils/mango';
 import { normalizePhoneNumber } from '@/utils/beCommonUtils';
 
@@ -9,11 +9,13 @@ export async function POST(request: Request) {
       subject, 
       body, 
       userInfo = '',
+      rep = 'Schiff',
     } = await request.json();
 
     userInfo.phoneNumber = normalizePhoneNumber(userInfo.phoneNumber)
    
-    contactSchiff(
+    if (rep.includes('Schiff')) {
+      contactSchiff(
         {
           subject,
           body,
@@ -22,9 +24,24 @@ export async function POST(request: Request) {
         }, {
           ...userInfo,
       },
-    { dev: false });
+      { dev: true });
     
-    await postMango('Schiff');
+      await postMango('Schiff');
+    }
+
+    if (rep.includes('Padilla')) {
+      contactPadilla(
+        {
+          subject,
+          body,
+          representative: 'Senator Alex Padilla'
+        }, {
+          ...userInfo
+        },
+        { dev: true});
+      await postMango('Padilla');
+    }
+    
 
     return NextResponse.json({ 
       message: 'Suck less',
