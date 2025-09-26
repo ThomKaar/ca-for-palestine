@@ -10,7 +10,7 @@ export default function Home() {
    const [count, setCount] = useState<number | null>(null);
 
    useEffect(() => {
-    fetch('/api/count-emails?rep=Schiff')
+    fetch('/api/count-emails?rep=Schiff,Padilla')
       .then(res => res.json())
       .then(data => setCount(data.count))
       .catch(err => console.error(err));
@@ -18,7 +18,7 @@ export default function Home() {
 
   return (
      <main>
-      <Form env={env} count={count as number}/>
+      <Form env={env} counts={count as { schiff: number, padilla: number }}/>
     </main>
   );
 };

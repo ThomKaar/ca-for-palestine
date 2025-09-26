@@ -15,8 +15,8 @@ const REPRESENTATIVES: Representative[] = [
   {
     name: 'Senator Alex Padilla',
     email: 'soemthing',
-    buttonColor: 'bg-red',
-    hoverColor: 'hover:bg-red-700',
+    buttonColor: 'bg-red-700',
+    hoverColor: 'hover:bg-red-500',
   }
 ];
 
