@@ -4,6 +4,7 @@ export interface Representative {
     email: string;
     buttonColor: string;
     hoverColor: string;
+    countField?: 'schiff' | 'padilla';
 }
 
 export interface EmailContent {

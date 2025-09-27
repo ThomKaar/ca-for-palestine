@@ -4,13 +4,11 @@ import { REPS } from '@/utils/beCommonUtils';
 
 export async function GET(request: NextRequest) {
   try {
-    console.log("HIIIII")
     const rep = request.nextUrl.searchParams.get('rep');
     if (!rep) throw Error('Missing rep');
 
-    let reps: string[] =[];
+    const reps: string[] =[];
     if (!rep.includes(',')) {
-      console.log('not ehre')
       if (!REPS.includes(rep)) {
           throw new Error(`Invalid rep: ${rep}.`);
       }
@@ -25,16 +23,14 @@ export async function GET(request: NextRequest) {
         }
       });
     }
-    console.log('and here')
-    let counts: { [s: string]: number } = {};
+    console.log('and here, reps are: ', reps);
+    const counts: { [s: string]: number } = {};
     REPS.forEach((r) => {
         counts[r] = 0;
     });
-    console.log('calling getMango')
     reps.forEach(async (r) => {
       counts[r] = await getMango(r);
     });
-    console.log(counts);
 
     return NextResponse.json({ 
       counts,

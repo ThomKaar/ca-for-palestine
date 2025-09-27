@@ -8,13 +8,15 @@ import { inlcudeName } from '@/utils/commonUtils';
 const REPRESENTATIVES: Representative[] = [
   {
     name: 'Senator Adam Schiff',
+    countField: 'schiff',
     email: 'adam.schiff@mail.house.gov',
     buttonColor: 'bg-black',
     hoverColor: 'hover:bg-gray-800',
   },
   {
     name: 'Senator Alex Padilla',
-    email: 'soemthing',
+    countField: 'padilla',
+    email: 'alex.padilla@mail.house.gov',
     buttonColor: 'bg-red-700',
     hoverColor: 'hover:bg-red-500',
   }
@@ -23,7 +25,7 @@ const REPRESENTATIVES: Representative[] = [
 const inputClasses = 'w-full px-3 py-2 border rounded-md';
 const labelClasses = 'block text-sm font-medium mb-1';
 
-export default function Form({ env = 'development', count = 0 }: { env?: string, count?: number }) {
+export default function Form({ env = 'development', counts = { schiff: 0, padilla: 0 } }: { env?: string, counts?: { schiff: number, padilla: number } }) {
     const [, setEmailGenerated] = useState(false);
     const [isGenerating, setIsGenerating] = useState<string | null>(null);
     const [selectedRep, setSelectedRep] = useState<string | null>(null);
@@ -139,7 +141,7 @@ return (
                         )}
                     </button>
                     <span className="text-gray-500 text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                        Together we&apos;ve sent {count} emails to {rep.name} so far.
+                        Together we&apos;ve sent {rep.countField ? counts[rep.countField] : 0} emails to {rep.name} so far.
                     </span>
                 </div>
                 ))}

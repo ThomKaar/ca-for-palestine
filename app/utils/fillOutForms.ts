@@ -55,4 +55,8 @@ const contactSchiff = async (email: EmailContent, userInfo: UserInfo, options = 
   }
 };
 
-export { contactSchiff };
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const contactPadilla = async (email: EmailContent, userInfo: UserInfo, options = { dev: true }) => {};
+
+export { contactSchiff, contactPadilla };
