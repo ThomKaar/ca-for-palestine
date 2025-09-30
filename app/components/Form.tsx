@@ -8,18 +8,27 @@ import { inlcudeName } from '@/utils/commonUtils';
 const REPRESENTATIVES: Representative[] = [
   {
     name: 'Senator Adam Schiff',
+    countField: 'schiff',
     email: 'adam.schiff@mail.house.gov',
     buttonColor: 'bg-black',
     hoverColor: 'hover:bg-gray-800',
   },
+  {
+    name: 'Senator Alex Padilla',
+    countField: 'padilla',
+    email: 'alex.padilla@mail.house.gov',
+    buttonColor: 'bg-red-700',
+    hoverColor: 'hover:bg-red-500',
+  }
 ];
 
 const inputClasses = 'w-full px-3 py-2 border rounded-md';
 const labelClasses = 'block text-sm font-medium mb-1';
 
-export default function Form({ env = 'development', count = 0 }: { env?: string, count?: number }) {
+export default function Form({ env = 'development', counts = { schiff: 0, padilla: 0 } }: { env?: string, counts?: { schiff: number, padilla: number } }) {
     const [, setEmailGenerated] = useState(false);
     const [isGenerating, setIsGenerating] = useState<string | null>(null);
+    const [selectedRep, setSelectedRep] = useState<string | null>(null);
     const [emailContent, setEmailContent] = useState<EmailContent | null>(null);
     const [, setSelectedRepresentative] = useState<Representative | null>(null);
     const [userInfo, setUserInfo] = useState<UserInfo>({
@@ -37,7 +46,7 @@ export default function Form({ env = 'development', count = 0 }: { env?: string,
     const [emailSent, setEmailSent] = useState(false);
 
 
-    const launchEmail = async ({ emailContent, userInfo }: { emailContent: EmailContent, userInfo: UserInfo }) => {
+    const launchEmail = async ({ emailContent, userInfo, rep }: { emailContent: EmailContent, userInfo: UserInfo, rep: string }) => {
         const { subject, body } = emailContent;
         if (isMissingUserInfo(userInfo)) {
             setMissingInfo(true);
@@ -47,7 +56,7 @@ export default function Form({ env = 'development', count = 0 }: { env?: string,
         const bodyWithName = inlcudeName(body, userInfo.firstName, userInfo.lastName);
         const response = await fetch('/api/submit-form', {
             method: 'POST',
-            body: JSON.stringify({ subject, body: bodyWithName, userInfo }),
+            body: JSON.stringify({ subject, body: bodyWithName, userInfo, rep }),
         });
         if (response.ok) {
             setEmailContent(null);
@@ -62,6 +71,7 @@ export default function Form({ env = 'development', count = 0 }: { env?: string,
 
     const generateEmail = async (rep: Representative) => {
         setIsGenerating(rep.name);
+        setSelectedRep(rep.name);
         let response;
         const isDev = env === 'development';
         try {
@@ -131,7 +141,7 @@ return (
                         )}
                     </button>
                     <span className="text-gray-500 text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                        Together we&apos;ve sent {count} emails to {rep.name} so far.
+                        Together we&apos;ve sent {rep.countField ? counts[rep.countField] : 0} emails to {rep.name} so far.
                     </span>
                 </div>
                 ))}
@@ -321,7 +331,7 @@ return (
                 />
                 </div>
                 <button
-                onClick={() => launchEmail({ emailContent, userInfo })}
+                onClick={() => launchEmail({ emailContent, userInfo, rep: selectedRep || '' })}
                 className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg text-lg transition-colors duration-200 flex items-center justify-center gap-2"
                 >
                 <span>Send Email</span>

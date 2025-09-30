@@ -4,14 +4,34 @@ import { REPS } from '@/utils/beCommonUtils';
 
 export async function GET(request: NextRequest) {
   try {
-    const rep = request.nextUrl.searchParams.get('rep'); 
-    if (!rep || !REPS.includes(rep)) {
-        throw new Error(`Invalid rep: ${rep}.`);
-    }
-    const count = await getMango(rep);
+    const rep = request.nextUrl.searchParams.get('rep');
+    if (!rep) throw Error('Missing rep');
 
+    const reps: string[] =[];
+    if (!rep.includes(',')) {
+      if (!REPS.includes(rep)) {
+          throw new Error(`Invalid rep: ${rep}.`);
+      }
+      reps.push(rep);
+    } else { // multiple reps
+      rep.split(',').forEach((r) => {
+        if (!r || !REPS.includes(r)) {
+            throw new Error(`Invalid rep: ${r}.`);
+        } else {
+          reps.push(r);
+        }
+      });
+    }
+    const counts: { [s: string]: number } = {};
+    REPS.forEach((r) => {
+        counts[r] = 0;
+    });
+    const dbResponse = await Promise.all(reps.map((r) => getMango(r)));
+    dbResponse.forEach((count, i) => {
+      counts[reps[i]] = count;
+    });
     return NextResponse.json({ 
-      count,
+      counts,
       status: 200,
     });
   } catch (err) {
@@ -20,4 +40,4 @@ export async function GET(request: NextRequest) {
       { status: 500 }
     );
   }
-} 
+}

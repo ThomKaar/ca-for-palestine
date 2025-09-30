@@ -1,9 +1,10 @@
-type RepName = 'Senator Adam Schiff' | 'Liccardo' | 'Padilla';
+type RepName = 'Senator Adam Schiff' | 'Liccardo' | 'Senator Alex Padilla';
 export interface Representative {
     name: RepName;
     email: string;
     buttonColor: string;
     hoverColor: string;
+    countField?: 'schiff' | 'padilla';
 }
 
 export interface EmailContent {

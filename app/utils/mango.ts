@@ -26,7 +26,6 @@ async function connectAndPost(rep: string) {
     }
     
 }
- 
 async function connectAndCountReps(rep: string) {
     let client;
     try {
@@ -41,7 +40,8 @@ async function connectAndCountReps(rep: string) {
         await client.connect();
         const database = await client.db(dbName);
         const collection = database.collection(collectionName);
-        return await collection.countDocuments({ rep: rep });
+        const count  = await collection.countDocuments({ rep: rep });
+        return count;
      } catch (err) {
         console.log(err);
         return -1;
