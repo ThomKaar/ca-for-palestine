@@ -7,10 +7,8 @@ const assignElementValue = (e: HTMLTextAreaElement | HTMLInputElement | HTMLSele
   return;
 };
 
-
 export const selectFeedback = async (page: Page) => {
-    const select = await page.$('form[id="gform_1"] select[id="input_1_23"]');
-    await page.evaluate(assignElementValue, select, 'contact');
+    const select = await page.select('form[id="gform_1"] select[id="input_1_23"]', 'contact');
     return select;
 }
 
@@ -85,9 +83,8 @@ export const getMessageTextArea = async (page: Page, message: string) => {
 }
 
 export const noUpdates = async (page: Page) => {
-    const noInput  = await page.$('input[id="choice_1_18_1"]');
-    await noInput?.click();
-    return noInput;
+    await page.waitForSelector('input#choice_1_18_1');
+    await page.click('input#choice_1_18_1');
 };
 
 export const submitForm = async (page: Page) => {

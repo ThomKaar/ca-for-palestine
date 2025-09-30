@@ -14,7 +14,6 @@ export async function GET(request: NextRequest) {
       }
       reps.push(rep);
     } else { // multiple reps
-      console.log('but here')
       rep.split(',').forEach((r) => {
         if (!r || !REPS.includes(r)) {
             throw new Error(`Invalid rep: ${r}.`);
@@ -23,15 +22,14 @@ export async function GET(request: NextRequest) {
         }
       });
     }
-    console.log('and here, reps are: ', reps);
     const counts: { [s: string]: number } = {};
     REPS.forEach((r) => {
         counts[r] = 0;
     });
-    reps.forEach(async (r) => {
-      counts[r] = await getMango(r);
+    const dbResponse = await Promise.all(reps.map((r) => getMango(r)));
+    dbResponse.forEach((count, i) => {
+      counts[reps[i]] = count;
     });
-
     return NextResponse.json({ 
       counts,
       status: 200,

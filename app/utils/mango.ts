@@ -41,7 +41,6 @@ async function connectAndCountReps(rep: string) {
         const database = await client.db(dbName);
         const collection = database.collection(collectionName);
         const count  = await collection.countDocuments({ rep: rep });
-        console.log(count);
         return count;
      } catch (err) {
         console.log(err);

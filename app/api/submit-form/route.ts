@@ -24,7 +24,7 @@ export async function POST(request: Request) {
         }, {
           ...userInfo,
       },
-      { dev: true });
+      { dev: false });
     
       await postMango('Schiff');
     }
@@ -38,7 +38,7 @@ export async function POST(request: Request) {
         }, {
           ...userInfo
         },
-        { dev: true});
+        { dev: false });
       await postMango('Padilla');
     }
     

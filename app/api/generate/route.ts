@@ -5,6 +5,11 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
+const moneyTaken: Record<string, string> = {
+  'Senator Adam Schiff': '$6,000,000',
+  'Senator Alex Padilla': '$104,000',
+};
+
 export async function POST(request: Request) {
   try {
     const { representative } = await request.json();
@@ -15,7 +20,7 @@ export async function POST(request: Request) {
 3. Reference how we need to help the starving families in Gaza
 4. Request concrete steps to help stop the violence
 5. Hold Netanyahu accountable
-6. Hold ${representative} accountable for allowing this to happen after taking $6million from pro-israel lobbies. 
+6. Hold ${representative} accountable for allowing this to happen after taking ${moneyTaken[representative] || 'too much money'} from pro-israel lobbies.
 7. Be around 200 words
 8. Include a clear subject line
 9. Finish the email with Sincerely, [Your Name]`;
