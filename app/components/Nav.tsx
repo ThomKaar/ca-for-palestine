@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 
 const navItems = [
   { name: "Home", path: "/", activeClasses: 'text-black border-black', hoverClasses: 'hover:text-black hover:border-black', activeMobileClasses: 'bg-gray-50' },
+  { name: "Calls", path: "/calls", activeClasses: 'text-emerald-700 border-emerald-700', hoverClasses: 'hover:text-emerald-700 hover:border-emerald-700', activeMobileClasses: 'bg-emerald-50' },
   { name: "About", path: "/about", activeClasses: 'text-green-600 border-green-600', hoverClasses: 'hover:text-green-600 hover:border-green-600', activeMobileClasses: 'bg-green-50' },
   { name: "Contact", path: "/contact", activeClasses: 'text-red-600 border-red-600', hoverClasses: 'hover:text-red-600 hover:border-red-600', activeMobileClasses: 'bg-red-50' },
 ];

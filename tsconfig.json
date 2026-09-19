@@ -22,6 +22,9 @@
     "paths": {
       "@/*": [
         "./app/*"
+      ],
+      "@calls/*": [
+        "./lib/calls/*"
       ]
     },
     "plugins": [

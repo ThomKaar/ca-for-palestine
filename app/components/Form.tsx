@@ -1,7 +1,7 @@
 'use client';
 
 import '../styles/page.css';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import type { Representative, EmailContent, UserInfo } from '../types/main.ts';
 import { inlcudeName } from '@/utils/commonUtils';
 
@@ -44,10 +44,13 @@ export default function Form({ env = 'development' }: { env?: string }) {
         state: 'California',
         zipCode: '',
         phoneNumber: '',
+        alternatePhoneNumber: '',
         email: '',
     });
     const [missingInfo, setMissingInfo] = useState(false);
     const [emailSent, setEmailSent] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const submissionInFlight = useRef(false);
 
     // Opt-in state
     const [sentEmailData, setSentEmailData] = useState<{ subject: string; body: string; rep: string } | null>(null);
@@ -74,23 +77,30 @@ export default function Form({ env = 'development' }: { env?: string }) {
     };
 
     const launchEmail = async ({ emailContent, userInfo, rep }: { emailContent: EmailContent, userInfo: UserInfo, rep: string }) => {
+        if (submissionInFlight.current) return;
         const { subject, body } = emailContent;
         if (isMissingUserInfo(userInfo)) {
             setMissingInfo(true);
             return;
         }
 
-        const bodyWithName = inlcudeName(body, userInfo.firstName, userInfo.lastName);
-        const response = await fetch('/api/submit-form', {
-            method: 'POST',
-            body: JSON.stringify({ subject, body: bodyWithName, userInfo, rep }),
-        });
-        if (response.ok) {
-            setSentEmailData({ subject, body: bodyWithName, rep });
-            setEmailContent(null);
-            setEmailSent(true);
+        submissionInFlight.current = true;
+        setIsSubmitting(true);
+        try {
+            const bodyWithName = inlcudeName(body, userInfo.firstName, userInfo.lastName);
+            const response = await fetch('/api/submit-form', {
+                method: 'POST',
+                body: JSON.stringify({ subject, body: bodyWithName, userInfo, rep }),
+            });
+            if (response.ok) {
+                setSentEmailData({ subject, body: bodyWithName, rep });
+                setEmailContent(null);
+                setEmailSent(true);
+            }
+        } finally {
+            submissionInFlight.current = false;
+            setIsSubmitting(false);
         }
-        return;
     };
 
     const isMissingUserInfo = (userInfo: UserInfo): boolean => {
@@ -459,11 +469,30 @@ return (
                     className={`${inputClasses} border-gray-300`}
                 />
                 </div>
+                <div>
+                <label htmlFor="alternatePhone" className="block text-sm font-medium text-gray-700 mb-1">
+                    Alternate Phone Number (optional)
+                </label>
+                <input
+                    type="text"
+                    id="alternatePhone"
+                    pattern="^\+?[1-9]\d{1,14}$"
+                    placeholder="Leave blank if you do not have one"
+                    value={userInfo.alternatePhoneNumber}
+                    onChange={(e) => {
+                    setUserInfo({ ...userInfo, alternatePhoneNumber: e.target.value });
+                    }}
+                    className={`${inputClasses} border-gray-300`}
+                />
+                </div>
                 <button
+                type="button"
+                disabled={isSubmitting}
+                aria-busy={isSubmitting}
                 onClick={() => launchEmail({ emailContent, userInfo, rep: selectedRep || '' })}
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg text-lg transition-colors duration-200 flex items-center justify-center gap-2"
+                className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 disabled:cursor-not-allowed text-white font-bold py-3 px-6 rounded-lg text-lg transition-colors duration-200 flex items-center justify-center gap-2"
                 >
-                <span>Send Email</span>
+                <span>{isSubmitting ? 'Sending…' : 'Send Email'}</span>
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>

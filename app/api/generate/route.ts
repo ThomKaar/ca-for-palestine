@@ -1,10 +1,6 @@
 import { NextResponse } from 'next/server';
 import OpenAI from 'openai';
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
-
 const moneyTaken: Record<string, string> = {
   'Senator Adam Schiff': '$6,000,000',
   'Senator Alex Padilla': '$104,000',
@@ -12,6 +8,14 @@ const moneyTaken: Record<string, string> = {
 
 export async function POST(request: Request) {
   try {
+    if (!process.env.OPENAI_API_KEY) {
+      return NextResponse.json(
+        { error: 'Email generation is not configured.' },
+        { status: 503 },
+      );
+    }
+
+    const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
     const { representative } = await request.json();
 
     const prompt = `Write a professional and compelling email to ${representative} about stopping the genocide in Palestine. The email should:
@@ -51,4 +55,4 @@ export async function POST(request: Request) {
       { status: 500 }
     );
   }
-} 
+}

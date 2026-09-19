@@ -22,5 +22,6 @@ export interface UserInfo {
     state: string;
     zipCode: string;
     phoneNumber: string;
+    alternatePhoneNumber: string;
     email: string;
 }

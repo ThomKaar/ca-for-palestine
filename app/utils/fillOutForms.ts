@@ -64,6 +64,7 @@ const contactSchiff = async (email: EmailContent, userInfo: UserInfo, options = 
     }
   } catch (e) {
     console.error('Error in contactSchiff:', e);
+    throw e;
   } finally {
       if (!dev) {
           await browser.close();
@@ -72,7 +73,6 @@ const contactSchiff = async (email: EmailContent, userInfo: UserInfo, options = 
 };
 
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const contactPadilla = async (email: EmailContent, userInfo: UserInfo, options = { dev: true }) => {
   const { dev = true } = options;
   const browser = await puppeteer.launch({ headless: false });
@@ -102,7 +102,8 @@ const contactPadilla = async (email: EmailContent, userInfo: UserInfo, options =
       await submitForm(page);
     }
   } catch (e) {
-    console.error('Error in contactSchiff:', e);
+    console.error('Error in contactPadilla:', e);
+    throw e;
   } finally {
       if (!dev) {
           await browser.close();
