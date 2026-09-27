@@ -8,4 +8,5 @@ const eslintConfig = defineConfig([
   ...nextTs,
 ]);
 
+
 export default eslintConfig;
